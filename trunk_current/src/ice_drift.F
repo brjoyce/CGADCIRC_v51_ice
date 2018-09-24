@@ -74,7 +74,7 @@ C***********************************************************************
       
 ! Read meta info -------------------------------------------------
 
-      OPEN(26,FILE=TRIM(GBLINPUTDIR)//'/'//'fort.26',STATUS='OLD',
+      OPEN(266,FILE=TRIM(GBLINPUTDIR)//'/'//'fort.266',STATUS='OLD',
      & ACTION='READ')
 
       ! Read the number of sets of .ice files.
@@ -82,7 +82,7 @@ C***********************************************************************
       ! If numSets = 2 then ADCIRC requires UNIT 226 and 228.
       !   UNIT 226 and 228 are ice concentration fields
 
-      read(26,*,err=99999) numSets
+      read(266,*,err=99999) numSets
 
       if(numSets.NE.1.AND.numSets.NE.2) then
         if (myproc == 0) write(screenunit,1004)
@@ -94,7 +94,7 @@ C***********************************************************************
       endif
 
       ! Read the number of blank snaps to be inserted before OWI ice fields start
-      read(26,*,err=99999) numBlankSnaps
+      read(266,*,err=99999) numBlankSnaps
 
       ! If numBlankSnaps < 0, ABS(numBlankSnaps) snaps in OWI ice files (UNIT226 and 228) will be skipped.
       if(numBlankSnaps.LT.0) then
@@ -106,7 +106,7 @@ C***********************************************************************
         numSkipSnaps = 0 
       endif
 
-      close(26)
+      close(266)
 
 ! Read basin ice file header ------------------------------------------------
 
@@ -175,7 +175,7 @@ C***********************************************************************
 
  10   format(a51,i12,a5,i12)
  1004 FORMAT(//,1X,' NUMBER OF SETS WAS SPECIFIED'//
-     &       'INCORRECTLY IN UNIT26.'/
+     &       'INCORRECTLY IN UNIT266.'/
      &       ' IT MUST BE ETEHR OF 1 or 2'/
      &       ' EXECUTION WILL BE TERMINATED.'//)
 

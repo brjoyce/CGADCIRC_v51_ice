@@ -1,0 +1,528 @@
+
+Overall switches:
+-#                  Display each command as it is run
+-###                Display commands that would be executed
+--flagcheck         Don't compile anything, just emit error messages for command-line switches
+--version           Display compiler version
+-c                  Stop after assemble; output in object file
+-[no]defaultoptions Use default options from configuration file
+-dryrun             Display commands that would be executed
+-drystdinc          Display standard include directories and exit
+-flags              Show all compiler switches
+-help[=groups|asm|debug|language|linker|opt|other|overall|phase|prepro|suffix|switch|target|variable]
+                    Show compiler switches
+-Manno              Annotate assembly code with source; implies -Mkeepasm
+-Minform=inform|warn|severe|fatal|[no]file
+                    Set error level of messages to display
+    [no]file        Print source file names as they are compiled
+-Mkeepasm           Preserve intermediate assembly language file
+-M[no]list          Generate a listing file
+-noswitcherror      Ignore unknown command line switches
+-o<outputfile>      Name the output file
+-S                  Stop before assembling; output in .s file
+-show               Show compiler configuration
+-silent             Inhibit warning messages; same as -Minform=severe
+-time               Print execution time for each compiler step
+-V[<ver>]           Display or change compiler version
+-v                  Display each command as it is run
+-w                  Inhibit warning messages; same as -Minform=severe
+-W0,<arg>           Pass argument to compiler
+-Wh,<arg>           Pass argument to F90 front end
+-Wi,<arg>           Pass argument to IPA Linker
+-Y0,<compdir>       Change compiler directory
+-Yc,<compdir>       Change C++ compiler directory
+-Yh,<compdir>       Change F90/HPF front end directory
+-Yi,<ipadir>        Change IPA tools directory
+
+Optimization switches:
+-fast               Common optimizations; includes -O2 -Munroll=c:1 -Mnoframe -Mlre -Mautoinline
+                    == -Mvect=sse -Mscalarsse -Mcache_align -Mflushz -Mpre
+-fastsse            == -fast
+-fPIC               Generate position independent code
+-fpic               Generate position independent code
+-KPIC               Generate position independent code
+-Kpic               Generate position independent code
+-M[no]autoinline[=levels:<n>|maxsize:<n>|totalsize:<n>]
+                    Enable automatic function inlining in C/C++
+    levels:<n>      Automatically inline up to n levels deep
+    maxsize:<n>     Automatically inline functions size n and less
+    totalsize:<n>   Limit automatical inlining to total size of n
+-Mcache_align       Align long objects on cache-line boundaries
+-Mconcur[=allcores|bind|[no]altcode:<n>|altreduction:<n>|[no]assoc|[no]cncall|dist:{block|cyclic}|[no]innermost|levels:<n>|[no]numa]
+                    Generate parallel loops
+    allcores        Use all available cores; specify at link time
+    bind            Bind threads to cores; specify at link time
+    [no]altcode:<n> Execute alternate serial code if loop count is n or less
+    altreduction:<n>
+                    Execute alternate serial code if loop has a reduction
+                    and count is n or less
+    [no]assoc       Enable parallelization of loops with associative reductions
+    [no]cncall      Assume loops containing calls are safe to parallelize
+    dist            Parallelize with block of cyclic iteration distribution
+     block          Block distribution
+     cyclic         Cyclic distribution
+    [no]innermost   Enable parallelization of innermost loops
+    levels:<n>      Parallelize loops nested at most n levels deep
+    [no]numa        Use (don't use) thread/processors affinity
+                    (for NUMA architectures)
+-M[no]depchk        Check dependence relations for vector or parallel code
+-M[no]dse           Dead store elimination
+-Mextract=<size>|<func>|lib:<extlib>|name:<func>|size:<n>
+                    Extract subprograms for inlining
+    <size>          Set maximum function size to extract
+    <func>          Extract function func
+    lib:<extlib>    Store information in directory extlib
+    name:<func>     Extract function func
+    size:<n>        Limit size of extracted functions to n
+-M[no]frame         Generate code to set up a stack frame
+-Minfo[=all|accel|ccff|ftn|hpf|inline|intensity|ipa|loop|lre|mp|opt|par|pfo|stat|time|unified|vect]
+                    Generate informational messages about optimizations
+    all             -Minfo=accel,inline,ipa,loop,lre,mp,opt,par,unified,vect
+    accel           Enable Accelerator information
+    ccff            Append information to object file
+    ftn             Enable Fortran-specific information
+    hpf             Enable HPF-specific information
+    inline          Enable inliner information
+    intensity       Enable compute intensity information
+    ipa             Enable IPA information
+    loop            Enable loop optimization information
+    lre             Enable LRE information
+    mp              Enable OpenMP information
+    opt             Enable optimizer information
+    par             Enable parallelizer information
+    pfo             Enable profile feedback information
+    time            Display time spent in compiler phases
+    unified         Enable unified binary information
+    vect            Enable vectorizer information
+-Minline[=lib:<inlib>|<size>|<func>|except:<func>|name:<func>|size:<n>|levels:<n>|reshape]
+                    Enable function inlining
+    lib:<inlib>     Use extracted functions from inlib
+    <size>          Set maximum function size to inline
+    <func>          Inline function func
+    except:<func>   Do not inline function func
+    name:<func>     Inline function func
+    size:<n>        Inline only functions smaller than n
+    levels:<n>      Inline n levels of functions
+    reshape         Allow inlining in Fortran even when array shapes do not match
+    -Minline        Inline all functions that were extracted
+-Minstrument[=functions]
+                    Generate additional code for instrumentation; implies -Minfo=ccff -Mframe
+    functions       Enable instrumentation of functions
+    -Minstrument    Enable instrumentation of functions
+-M[no]ipa[=[no]align|[no]arg|[no]cg|[no]const|except:<func>|fast|[no]force|[no]globals|inline:{<n>|except:<func>|nopfo|[no]reshape}|ipofile|jobs:<n>|[no]keepobj|[no]libc|[no]libinline|[no]libopt|[no]localarg|main:<func>|[no]ptr|[no]alias|[no]f90ptr|[no]pure|quiet|required|safe:<name>|[no]safeall|[no]shape|summary|[no]vestigial]
+                    Enable Interprocedural Analysis
+    [no]align       Recognize when targets of pointer dummy are aligned
+    [no]arg         Remove arguments replaced by -Mipa=ptr,const
+    [no]cg          Generate call graph information for pgicg tool
+    [no]const       Interprocedural constant propagation
+    except:<func>   Used with -Mipa=inline, don't inline func
+    fast            Equivalant to -Mipa=align,arg,const,f90ptr,shape,libc,globals,localarg,alias,ptr,pure
+    [no]force       Force all objects to recompile regardless of whether IPA information has changed
+    [no]globals     Optimize references to globals
+    inline          Automatically determine which functions to inline
+     <n>            Limit to n levels of inlining
+     except:<func>  Don't inline func
+     nopfo          Ignore PFO frequency information
+     [no]reshape    Inline with mismatched array shapes
+    ipofile         Save IPO information in .ipo files
+    jobs:<n>        Recompile n jobs in parallel
+    [no]keepobj     Keep IPA-optimized object files
+    [no]libc        Optimize calls to certain libc functions
+    [no]libinline   Inline (don't inline) routines even from libraries; implies -Mipa=inline
+    [no]libopt      Optimize (don't optimize) routines in libraries
+    [no]localarg    -Mipa=arg plus externalizes local pointer targets
+    main:<func>     Specify a function to serve as a global entry point; may appear multiple times; disables linking
+    [no]ptr         Pointer disambiguation
+    [no]alias       Pointer alias analysis; implies -Mipa=ptr
+    [no]f90ptr      Fortran 90 Pointer disambiguation
+    [no]pure        Pure function detection
+    required        Return error condition if IPA is inhibited
+    safe:<name>     Declare a function or all functions in a library to be side-effect free
+    [no]safeall     Allow unsafe optimization by assuming unknown function references are unimportant
+    [no]shape       Fortran 90 shape propagation
+    summary         Only collect IPA summary information; prevents IPA optimization for these files
+    [no]vestigial   Remove functions that are never called
+    -Mipa           Default enables constant propagation
+-M[no]lre[=[no]assoc]
+                    Loop-carried redundancy elimination
+    [no]assoc       Allow expression reassociation
+-M[no]movnt         Force generation of nontemporal moves
+-Mneginfo[=all|accel|ftn|hpf|inline|ipa|loop|lre|mp|opt|par|pfo|vect]
+                    Generate informational messages about optimizations
+    all             -Mneginfo=accel,inline,ipa,loop,lre,mp,opt,par,vect
+    accel           Enable Accelerator information
+    ftn             Enable Fortran-specific information
+    hpf             Enable HPF-specific information
+    inline          Enable inliner information
+    ipa             Enable IPA information
+    loop            Enable loop optimization information
+    lre             Enable LRE information
+    mp              Enable OpenMP information
+    opt             Enable optimizer information
+    par             Enable parallelizer information
+    pfo             Enable profile feedback information
+    vect            Enable vectorizer information
+-Mnoopenmp          Ignore OpenMP directives; use with -mp
+-Mnosgimp           Ignore SGI parallelization directives; use with -mp
+-Mnovintr           Do not generate vector intrinsic calls
+-[no]mp[=[no]align|allcores|bind|[no]numa]
+                    Enable OpenMP directives, link with MP libraries
+    [no]align       Modify default loop scheduling to prefer aligned array references
+    allcores        Use all available cores; specify at link time
+    bind            Bind threads to cores; specify at link time
+    [no]numa        Use (don't use) thread/processors affinity (for NUMA architectures)
+-Mpfi[=[no]indirect]
+                    Enable profile-feedback instrumentation
+    [no]indirect    Save [don't save] indirect function call targets
+-Mpfo[=[no]indirect|[no]layout|dir:<dir>]
+                    Enable profile-feedback optimizations
+    [no]indirect    Enable [disable] indirect function call inlining
+    [no]layout      Enable [disable] dynamic code layout
+    dir:<dir>       Specify directory containing pgfi.out file
+-M[no]pre           Enable partial redundancy elimination
+-M[no]prefetch[=distance:<d>|n:<n>|nta|plain|t0|w]
+                    Enable prefetch instructions
+    distance:<d>    Set prefetch-ahead distance in cache lines
+    n:<n>           Set maximum number of prefetches to generate
+    nta             Use prefetchnta
+    plain           Use prefetch
+    t0              Use prefetcht0
+    w               Allow prefetchw
+-Mprof[=[no]ccff|dwarf|func|lines|mpich1|mpich2|hpmpi|mvapich1|time]
+                    Generate additional code for profiling; implies -Minfo=ccff
+    [no]ccff        Enable (disable) CCFF information
+    dwarf           Add limited DWARF info sufficient for performance profilers
+    func            Function-level profiling
+    lines           Line-level profiling
+    mpich1          Use profiled MPICH-1 communication library; implies -Mmpi=mpich1
+    mpich2          Use profiled MPICH-2 communication library; implies -Mmpi=mpich2
+    hpmpi           Use profiled HP-MPI communication library; implies -Mmpi=hpmpi
+    mvapich1        Use profiled MVAPICH communication library; implies -Mmpi=mvapich1
+    time            Sample-based instruction-level profiling
+-M[no]propcond      Enable constant propagation from assertions derived from equality conditional
+-Mquad              Align large objects on quad-word boundaries
+-Msafe_lastval      Allow parallelization of loops with conditional scalar assignments
+-M[no]scalarsse     Generate scalar sse code with xmm registers; implies -Mflushz
+-M[no]smart         Enable [disable] optional AMD64-specific post-pass instruction scheduling
+-M[no]smartalloc[=huge|huge:<n>|nohuge|hugebss]
+                    Add call in main routine to enable optimized malloc routines
+    huge            Link in the huge page runtime library
+    huge:<n>        Link the huge page runtime library and allocate n huge pages
+    hugebss         Put the BSS section in huge pages
+-M[no]stride0       Generate code to check for zero loop increments
+-M[no]unroll[=c:<n>|n:<n>|m:<n>]
+                    Enable loop unrolling
+    c:<n>           Completely unroll loops with loop count n or less
+    n:<n>           Unroll single-block loops n times
+    m:<n>           Unroll multi-block loops n times
+    -Munroll        Unroll loops with a loop count of 1
+-M[no]unsafe_par_align
+                    Generate aligned moves in parallelized loops if first element is aligned
+-M[no]vect[=[no]altcode|[no]assoc|cachesize:<c>|[no]fuse|[no]gather|[no]idiom|levels:<n>|[no]partial|prefetch|[no]short|[no]simd|[no]sizelimit[:n]|[no]sse|[no]tile|[no]uniform]
+                    Control automatic vector pipelining
+    [no]altcode     Generate appropriate alternative code for vectorized loops
+    [no]assoc       Allow [disallow] reassociation
+    cachesize:<c>   Optimize for cache size c
+    [no]fuse        Enable [disable] loop fusion
+    [no]gather      Enable [disable] vectorization of indirect array references
+    [no]idiom       Enable [disable] idiom recognition
+    levels:<n>      Maximum nest level of loops to optimize
+    [no]partial     Enable [disable] partial loop vectorization via inner loop distribution
+    prefetch        Generate prefetch instructions
+    [no]short       Enable [disable] short vector operations
+    [no]simd        Generate [don't generate] SIMD instructions
+     128            Use 128-bit SIMD instructions
+     256            Use 256-bit SIMD instructions
+    [no]sizelimit[:n]
+                    Limit size of vectorized loops
+    [no]sse         Generate [don't generate] SSE instructions
+    [no]tile        Enable [disable] loop tiling
+    [no]uniform     Perform consistent optimizations in both vectorized and residual loops; this may affect the performance of the residual loop
+-M[no]zerotrip      Assume loops may not execute; add zero-trip test
+-O[<n>]             Set optimization level, -O0 to -O4, default -O2
+-pg                 Enable gprof profiling; implies -Mframe
+
+Debugging switches:
+-C                  Generate code to check array bounds
+-g                  Generate information for debugger
+-gopt               Generate information for debugger without disabling optimizations
+-M[no]bounds        Generate code to check array bounds
+-Mchkfpstk          Check consistency of floating point stack at subprogram calls (32-bit only)
+-Mchkptr            Check for NULL pointers
+-Mchkstk            Check for sufficient stack space upon subprogram entry
+-Mcoff              Generate COFF format object
+-Mdwarf1            Generate DWARF1 debug information with -g
+-Mdwarf2            Generate DWARF2 debug information with -g
+-Mdwarf3            Generate DWARF3 debug information with -g
+-Melf               Generate ELF format object
+-Mnodwarf           Do not add DWARF debug information
+-M[no]pgicoff       Generate additional symbolic information
+-[no]traceback      Add debug information for runtime traceback
+
+Preprocessor switches:
+-D<macro>           Define a preprocessor macro
+-dD                 (C only) Print macros and values from source files
+-dI                 (C only) Print include file names
+-dM                 (C only) Print macros and values, including predefined and command-line macros
+-dN                 (C only) Print macro names from source files
+-E                  Stop after preprocessor; print output on standard output
+-F                  Stop after preprocessing, save output in .f file
+-I<incdir>          Add directory to include file search path
+-Mcpp[=m|md|mm|mmd|line|[no]comment|suffix:<suff>|<suff>|include:<file>|c89|c99]
+                    Just preprocess the input files
+    m               Print makefile dependencies
+    md              Print makefile dependencies to .d file
+    mm              Print makefile dependencies; ignore system includes
+    mmd             Print makefile dependencies to .d file; ignore system includes
+    line            Insert line numbers into preprocess output
+    [no]comment     Keep comments in preprocessed output
+    suffix:<suff>   Suffix to use for makefile dependencies
+    <suff>          Suffix to use for makefile dependencies
+    include:<file>  Include file before processing source file
+    c89             Use the C89 language
+    c99             Use the C99 language
+-Mnostddef          Do not use standard macro definitions
+-Mnostdinc          Do not use standard include directories
+-Mpreprocess        Run preprocessor for assembly and Fortran files
+-U<macro>           Undefine a preprocessor macro
+-YI,<incdir>        Change standard include directory
+-Yp,<preprodir>     Change preprocessor directory
+
+Assembler switches:
+-Wa,<arg>           Pass argument to assembler
+-Ya,<asdir>         Change assembler directory
+
+Linker switches:
+--[no-]as-needed    Passed to linker; only set DT_NEEDED for the following shared libraries if they are used
+--[no-]whole-archive
+                    Passed to linker; includes all objects in subsequent archives
+-Bdynamic           Passed to linker; specify dynamic binding
+-Bstatic            Passed to linker; specify static binding
+-Bstatic_pgi        Use to link static PGI libraries with dynamic system libraries; implies -Mnorpath
+-g77libs            Include g77 or gfortran library when linking
+-L<libdir>          Passed to linker; Add directory to library search path
+-l<lib>             Passed to linker; Add library name to library search list
+-m                  Passed to linker; display link map
+-M[no]eh_frame      Add link flags to preserve exception-handling frame information
+-Mlfs               Link with library directory for large file support
+-Mmpi=mpich1|mpich2|hpmpi|mvapich1
+                    Use default or specified MPI libraries
+    mpich1          Use default MPICH-1 communication libraries
+    mpich2          Use default MPICH-2 communication libraries
+    hpmpi           Use default HP-MPI communication libraries
+    mvapich1        Use default MVAPICH communication libraries
+-Mnorpath           Don't add -rpath paths to link line
+-Mnostartup         Do not use standard linker startup file
+-Mnostdlib          Do not use standard linker libraries
+-Mscalapack         Add Scalapack libraries
+-pgcpplibs          Append C++ libraries to the link line
+-pgf77libs          Append pgf77 libraries to the link line
+-pgf90libs          Append pgf90 libraries to the link line
+-R<ldarg>           Passed to linker; just link symbols from object, or add directory to run time search path
+-r                  Generate relocatable object; passed to linker
+-rpath <dir>        Passed to linker; add directory to runtime shared library search path
+-s                  Passed to linker; strip symbol table from exectable
+-shared             Used to produce shared libraries; implies -fpic
+-soname <soname>    Passed to linker; sets DT_SONAME field to the specified name
+-u<undef>           Passed to linker; generate undefined reference
+-Wl,<arg>           Pass argument to linker
+-YC,<complibdir>    Change compiler library directory
+-YL,<stdlibdir>     Change standard library directory
+-Yl,<linkdir>       Change linker directory
+-YS,<startupdir>    Change startup object directory
+-YU,<libdir>        Change linker library area
+
+Language-specific switches:
+-asmsuffix=<suff>   Define a assembler language suffix
+-byteswapio         Swap byte-order for unformatted input/output
+-cppsuffix=<suff>   Define a C++ suffix
+-csuffix=<suff>     Define a C suffix
+-FSUFFIX=<suff>     Define a Fortran suffix requiring preprocessing
+-fsuffix=<suff>     Define a Fortran suffix
+-i2                 Treat INTEGER as INTEGER*2
+-i4                 Treat INTEGER as INTEGER*4
+-i8                 Treat INTEGER and LOGICAL as INTEGER*8 and LOGICAL*8
+-i8storage          INTEGER and LOGICAL occupy 8 bytes
+-Mallocatable=95|03 Select semantics for assignments to allocatables
+    95              Select Fortran 1995 semantics
+    03              Select Fortran 2003 semantics
+-M[no]backslash     Treat backslash like any other character in character strings
+-M[no]builtin       Use built-in functions
+-Mbyteswapio        Swap byte-order for unformatted input/output
+-Mcray=pointer      Set Cray pointer semantics
+-Mcuda[=emu|cc10|cc11|cc12|cc13|cc1x|cc20|cc2x|cc1.x|cc2.x|cuda3.2|3.2|cuda4.0|4.0|cuda4.1|4.1|fastmath|[no]flushz|keepgpu|keepbin|keepptx|maxregcount:<n>|nofma|ptxinfo]
+                    Enable CUDA Fortran
+    emu             Enable emulation mode
+    cc10            Compile for compute capability 1.0
+    cc11            Compile for compute capability 1.1
+    cc12            Compile for compute capability 1.2
+    cc13            Compile for compute capability 1.3
+    cc1x            Compile for compute capability 1.x
+    cc20            Compile for compute capability 2.0
+    cc2x            Compile for compute capability 2.x
+    cc1.x           Compile for compute capability 1.x
+    cc2.x           Compile for compute capability 2.x
+    cuda3.2         Use CUDA 3.2 Toolkit compatibility
+    3.2             Use CUDA 3.2 Toolkit compatibility
+    cuda4.0         Use CUDA 4.0 Toolkit compatibility
+    4.0             Use CUDA 4.0 Toolkit compatibility
+    cuda4.1         Use CUDA 4.1 Toolkit compatibility
+    4.1             Use CUDA 4.1 Toolkit compatibility
+    fastmath        Use fast math library
+    [no]flushz      Enable flush-to-zero mode on the GPU
+    keepgpu         Keep kernel source files
+    keepbin         Keep CUDA binary files
+    keepptx         Keep PTX portable assembly files
+    maxregcount:<n> Set maximum number of registers to use on the GPU
+    nofma           Don't generate fused mul-add instructions
+    ptxinfo         Print informational messages from PTXAS
+-M[no]dalign        Align doubles on double alignment boundaries
+-M[no]dclchk        Check that all variables are declared
+-M[no]defaultunit   Treat '*' unit as standard input/output
+-M[no]dlines        Compile lines beginning with the letter D
+-Mdollar=<char>     Map dollar sign in identifiers to this character
+-Mextend            Allow source lines up to 132 characters
+-Mfixed             Assume fixed-format source
+-M[no]free[form]    Assume free-format source
+-M[no]i4            Treat INTEGER as INTEGER*4
+-M[no]iomutex       Generate critical sections around Fortran input/output
+-Mlibsuffix=<suff>  Define a library file suffix
+-M[no]llalign       Require 8 byte alignment for long long
+-Mnomain            Don't include Fortran main program object module
+-Mobjsuffix=<suff>  Define a object file suffix
+-module <dir>       Add search directory for module information files
+-M[no]onetrip       Force DO loops to execute at least once
+-M[no]r8            Promote REAL variables and constants to DOUBLE PRECISION
+-M[no]r8intrinsics[=float]
+                    Treat REAL,CMPLX intrinsics as DBLE,DCMPLX
+    float           Treat FLOAT intrinsic as DBLE as well
+-M[no]recursive     Generate code to allow recursive subprograms
+-M[no]ref_externals Force references to any EXTERNAL subprograms
+-M[no]save          Assume all variables have SAVE attribute
+-M[no]signextend    Extend the sign bit when converting shorter to longer integer
+-Mstandard          Check standard conformance
+-M[no]unixlogical   Treat any nonzero logical value as .TRUE.
+-M[no]upcase        Preserve upper and lower case in identifiers; Fortran keywords must be lower case
+-r4                 Treat REAL as REAL*4
+-r8                 Treat REAL as REAL*8
+
+Target-specific switches:
+-acc[=strict|verystrict]
+                    Enable OpenACC directives
+    strict          Issue warnings for non-OpenACC accelerator directives
+    verystrict      Fail with an error for any non-OpenACC accelerator directive
+-K[no]ieee          Use IEEE division, optionally enable traps
+-Ktrap=align|denorm|divz|fp|inexact|inv|none|ovf|unf
+                    Determine IEEE Trap conditions
+-m32                Compile for 32-bit target
+-m64                Compile for 64-bit target
+-mcmodel=small|medium
+                    Set the memory model
+    small           Small model, total memory size < 2GB
+    medium          Medium model, total memory size > 2GB, object size < 2GB; implies -Mlarge_arrays
+-M[no]daz           Treat denormalized numbers as zero
+-M[no]flushz        Set SSE to flush-to-zero mode
+-M[no]fpapprox[=div|sqrt|rsqrt]
+                    Perform certain fp operations using low-precision approximation
+    div             Approximate floating point division
+    sqrt            Approximate floating point square root
+    rsqrt           Approximate floating point reciprocal square root
+    -Mfpapprox      Approximate div,sqrt,rsqrt
+-M[no]fpmisalign    Allow use of vector arithmetic instructions for unaligned operands
+-M[no]fprelaxed[=div|recip|sqrt|rsqrt|[no]order]
+                    Perform certain fp operations using relaxed precision
+    div             Perform divide with relaxed precision
+    recip           Perform reciprocal with relaxed precision
+    sqrt            Perform square root with relaxed precision
+    rsqrt           Perform reciprocal square root with relaxed precision
+    [no]order       Allow expression reordering, including factoring
+    -Mfprelaxed     Choose which operations depending on target processor
+-M[no]func32        Align functions on 32 byte boundaries
+-Mgccbug[s]         Match behavior of certain gcc bugs
+-M[no]large_arrays  Support for large arrays
+-M[no]longbranch    Enable long branches
+-M[no]loop32        Align innermost loops on 32 byte boundaries with -tp barcelona
+-M[no]reg_struct_return
+                    Return small struct/union values in registers (32-bit only)
+-M[no]second_underscore
+                    Add second underscore to global symbols that already contain an underscore
+-M[no]varargs       Calls from Fortran to C will use varargs calling sequence
+-Mwritable-strings  Store string constants in the writable data segment
+-pc=32|64|80        Precision control in x87 stack
+-ta=nvidia:{analysis|nofma|[no]flushz|keepbin|keepptx|keepgpu|maxregcount:<n>|cc10|cc11|cc12|cc13|cc1x|cc20|cc2x|cc1.x|cc2.x|fastmath|mul24|time|cuda3.2|3.2|cuda4.0|4.0|cuda4.1|4.1|[no]wait}|host
+                    Choose target accelerator
+    nvidia          Select NVIDIA accelerator target
+     analysis       Analysis only, no code generation
+     nofma          Don't generate fused mul-add instructions
+     [no]flushz     Enable flush-to-zero mode on the GPU
+     keepbin        Keep kernel .bin files
+     keepptx        Keep kernel .ptx files
+     keepgpu        Keep kernel source files
+     maxregcount:<n>
+                    Set maximum number of registers to use on the GPU
+     cc10           Compile for compute capability 1.0
+     cc11           Compile for compute capability 1.1
+     cc12           Compile for compute capability 1.2
+     cc13           Compile for compute capability 1.3
+     cc1x           Compile for compute capability 1.x
+     cc20           Compile for compute capability 2.0
+     cc2x           Compile for compute capability 2.x
+     cc1.x          Compile for compute capability 1.x
+     cc2.x          Compile for compute capability 2.x
+     fastmath       Use fast math library
+     mul24          Use 24-bit multiplication for subscripting
+     time           Collect simple timing information
+     cuda3.2        Use CUDA 3.2 Toolkit compatibility
+     3.2            Use CUDA 3.2 Toolkit compatibility
+     cuda4.0        Use CUDA 4.0 Toolkit compatibility
+     4.0            Use CUDA 4.0 Toolkit compatibility
+     cuda4.1        Use CUDA 4.1 Toolkit compatibility
+     4.1            Use CUDA 4.1 Toolkit compatibility
+     [no]wait       Wait for each kernel to finish; overrides nowait clause
+    host            Compile for the host, i.e., no accelerator target
+-tp=amd64|amd64e|athlon|athlonxp|barcelona|barcelona-32|barcelona-64|bulldozer|bulldozer-32|bulldozer-64|core2|core2-32|core2-64|istanbul|istanbul-32|istanbul-64|k7|k8|k8-32|k8-64|k8-64e|nehalem|nehalem-32|nehalem-64|p5|p6|p7|p7-32|p7-64|penryn|penryn-32|penryn-64|piii|piv|px|px-32|px-64|sandybridge|sandybridge-32|sandybridge-64|shanghai|shanghai-32|shanghai-64|x64
+                    Choose target processor type
+    amd64           Same as -tp k8-64
+    amd64e          Same as -tp k8-64e
+    athlon          AMD 32-bit Athlon Processor
+    athlonxp        AMD 32-bit Athlon XP Processor
+    barcelona       AMD Barcelona processor
+    barcelona-32    AMD Barcelona processor, 32-bit mode
+    barcelona-64    AMD Barcelona processor, 64-bit mode
+    bulldozer       AMD Bulldozer processor
+    bulldozer-32    AMD Bulldozer processor, 32-bit mode
+    bulldozer-64    AMD Bulldozer processor, 64-bit mode
+    core2           Intel Core-2 Architecture
+    core2-32        Intel Core-2 Architecture, 32-bit mode
+    core2-64        Intel Core-2 Architecture, 64-bit mode
+    istanbul        AMD Istanbul processor
+    istanbul-32     AMD Istanbul processor, 32-bit mode
+    istanbul-64     AMD Istanbul processor, 64-bit mode
+    k7              AMD Athlon Processor
+    k8              AMD64 Processor
+    k8-32           AMD64 Processor 32-bit mode
+    k8-64           AMD64 Processor 64-bit mode
+    k8-64e          AMD64 Processor rev E or later, 64-bit mode
+    nehalem         Intel Nehalem processor
+    nehalem-32      Intel Nehalem processor, 32-bit mode
+    nehalem-64      Intel Nehalem processor, 64-bit mode
+    p5              Intel P5 Pentium Architecture
+    p6              Intel P6 Architecture (Pentium Pro, II, III)
+    p7              Intel P7 Architecture (Pentium 4, Xeon, Centrino)
+    p7-32           Intel P7 Architecture (Pentium 4, Xeon, Centrino)
+    p7-64           Intel P7 Architecture with EM64T, 64-bit mode
+    penryn          Intel Penryn Architecture
+    penryn-32       Intel Penryn Architecture, 32-bit mode
+    penryn-64       Intel Penryn Architecture, 64-bit mode
+    piii            Intel Pentium III
+    piv             Intel Pentium 4
+    px              Generic x86 Processor
+    px-32           Generic x86 Processor, 32-bit mode
+    px-64           Generic x86-64 architecture
+    sandybridge     Intel SandyBridge processor
+    sandybridge-32  Intel SandyBridge processor, 32-bit mode
+    sandybridge-64  Intel SandyBridge processor, 64-bit mode
+    shanghai        AMD Shanghai processor
+    shanghai-32     AMD Shanghai processor, 32-bit mode
+    shanghai-64     AMD Shanghai processor, 64-bit mode
+    x64             Unified AMD/Intel 64-bit mode

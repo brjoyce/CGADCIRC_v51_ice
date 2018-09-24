@@ -1,0 +1,52 @@
+##############################################################################
+# IA32_GNU:		Intel Pentium with Linux using GNU compiler gfortran.
+##############################################################################
+F90_SER = ifort
+F90_OMP = ifort
+F90_MPI = mpif90
+
+#FLAGS_OPT = -O1 -g -traceback
+# Defalut intel-ND
+# FLAGS_OPT = -O3 -g -xHost -traceback -mcmodel=medium
+FLAGS_OPT = -O3 -g -traceback -mcmodel=medium
+
+ifeq ($(compiler),pgi-ND)
+    F90_SER = pgfortran 
+    F90_OMP = pgfortran
+
+    FLAGS_OPT = -O3 -g -traceback -mcmodel=medium
+
+    FLAGS_MSC = -Mnosecond_underscore
+    FLAGS90_MSC = $(FLAGS_MSC)
+else ifeq ($(compiler),gnu-ND)
+    F90_SER = gfortran
+    F90_OMP = gfortran
+ 
+#    FLAGS_OPT = -O3 -g -mcmodel=medium -v
+    	
+    FLAGS_OPT = -O3 -g -mcmodel=medium -mtune=native -v
+    	
+#    FLAGS_OPT = -O3 -g -mcmodel=medium -march=native -v
+    	
+    FLAGS_MSC = -fno-second-underscore -ffree-line-length-none
+    FLAGS90_MSC = $(FLAGS_MSC) -ffree-line-length-none
+else
+    FLAGS_MSC = -mcmodel=medium
+    FLAGS90_MSC = $(FLAGS_MSC) 
+endif
+
+FLAGS_SER =
+FLAGS_OMP = -fopenmp
+FLAGS_MPI =
+INCS_SER =
+INCS_OMP =
+INCS_MPI =
+LIBS_SER =
+LIBS_OMP = -static-libgcc
+LIBS_MPI =
+O_DIR = ../work/odir4/
+OUT = -o 
+EXTO = o
+MAKE = make
+RM = rm -f
+swch = -unix

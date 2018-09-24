@@ -1,0 +1,24 @@
+1. In a hot-start run, if a hot-start file (fort.67,fort.68) is decomposed (with adcprep), to make the code read in local file use,
+
+padcswan -R
+padcirc -R
+
+This aviods each processor to read in the global hot-start file.
+
+2. To get swan output from padcswan, make sure that 
+
+   TOUTSGE + NSPOOLGE to fall on the swan step (now every 600s).
+
+3. Note: SWAN by defalut is a single-precision code, to make it run in douple precision mode, use appropriate compiler flags to promote real to double (-r8 in ifort and pgi) and change MPI_REAL4 to MPI_REAL8 in /swan and change REAL(4) to REAL(8) /src/couple2swan.F (these done using Zach's perl trick
+
+perl -w -pi -e "s/MPI_REAL4/MPI_REAL8/g" * (for sourace codes in /swan)
+perl -w -pi -e "s/REAL\(4\)/REAL\(8\)/g" couple2swan.F 
+
+Now, to get the double-precion version, use
+
+make ..... padcswandb 
+
+
+
+   
+ 

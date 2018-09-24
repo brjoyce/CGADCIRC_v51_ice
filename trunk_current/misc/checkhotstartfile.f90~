@@ -1,0 +1,22 @@
+PROGRAM CHECK_HOTSTFILE
+  IMPLICIT NONE
+
+  LOGICAL:: FOUND
+  CHARACTER (LEN=80):: hotfilename
+
+  CALL get_command_argument(1, hotfilename) ;
+  IF ( LEN_TRIM(hotfilename) == 0 ) THEN
+    PRINT*, "Error: name of hot-start file is not supplied" ;
+    RETURN ;
+  END IF
+
+  INQUIRE(FILE=trim(hotfilename),EXIST=FOUND)    
+  IF ( .NOT. FOUND ) THEN
+     PRINT*, "Error: File named, ",  trim(hotfilename), ", is not found." ;
+  ELSE
+     !!$ OPEN(20, FILE = trim(hitfilename), ACCESS='DIRECT',RECL=8) ; 
+  END IF
+     
+ 
+  RETURN 
+END PROGRAM CHECK_HOTSTFILE

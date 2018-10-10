@@ -1266,7 +1266,7 @@ C
          ENDIF
          WRITE(15,80) NCORMSG
          WRITE(15,80) NTIPMSG
-         IF(NTIP.EQ.1) WRITE(15,*)  "-1"
+C         IF(NTIP.EQ.1) WRITE(15,*)  "-1"
 C     jgfdebug46.02 Added check for NWS=45 to write NWS=5
          IF (NWS.EQ.45) THEN
             WRITE(15,'(A1)') "5"

@@ -548,9 +548,9 @@ C
          ENDIF
       ENDIF
 	  
-	  IF (NTIP.EQ.1) THEN
-	     READ(15,*) RDUM                             !SKIP OVER SALBETA
-      ENDIF
+C	  IF (NTIP.EQ.1) THEN
+C	     READ(15,*) RDUM                             !SKIP OVER SALBETA
+C      ENDIF
 	  
 	  
 C

@@ -1115,10 +1115,10 @@ C...
      &        'IN THE COMPUTATION')
       ENDIF
 C     Will 10/15 2016 Read the coefficient for scalar SAL
-      IF (NTIP.EQ.1) THEN
-        READ(15,*) SALBETA
-        WRITE(16,*) 'SALBETA =',SALBETA
-      ENDIF
+C      IF (NTIP.EQ.1) THEN
+C       READ(15,*) SALBETA
+C        WRITE(16,*) 'SALBETA =',SALBETA
+C      ENDIF
 C...
 C...  READ AND PROCESS NWS - WIND AND PRESSURE FORCING & WAVE RADIATION
 C...  STRESS FORCING
